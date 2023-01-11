@@ -33,7 +33,7 @@ public class SpellingBee {
             ArrayList<String> YNList = new ArrayList<String>();
             System.out.println("\nRound " + round);
             for (int i = 0; i < contestants.size(); i++) {
-                int randomNum = (int) Math.floor(Math.random() * (words.size() + 1));
+                int randomNum = (int) Math.floor(Math.random() * (words.size() + 0));
                 System.out.println("The word for " + contestants.get(i) + " is: " + words.get(randomNum) + "\n" + "Answered correctly?(y/n): ");
                 String answer = input.nextLine();
                 if (answer.equals(no)) {

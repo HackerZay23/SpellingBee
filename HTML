@@ -1,0 +1,61 @@
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class SpellingBee {
+    
+    public static void main(String[] args) {
+        String yes = "y";
+        String no = "n";
+        int round = 1;
+
+        ArrayList<String> words = new ArrayList<String>();
+        File file = new File("words.txt");
+        try {
+            Scanner scan = new Scanner(file);
+            while (scan.hasNextLine()) {
+                words.add(scan.nextLine());
+            }
+            scan.close();
+        } catch (IOException e) {
+            e.printStackTrace(); /* print any exceptions */
+        }
+        Scanner input = new Scanner(System.in);
+        System.out.println("How many contestants");
+        int size = Integer.parseInt(input.nextLine());
+        ArrayList<String> contestants = new ArrayList<String>();
+        System.out.println("Enter the names of the contestants");
+        for (int i = 0; i < size; i++) {
+            contestants.add(input.nextLine());
+        }
+        while (contestants.size() > 1) {
+            ArrayList<String> YNList = new ArrayList<String>();
+            System.out.println("\nRound " + round);
+            for (int i = 0; i < contestants.size(); i++) {
+                int randomNum = (int) Math.floor(Math.random() * (words.size() + 1));
+                System.out.println("The word for " + contestants.get(i) + " is: " + words.get(randomNum) + "\n" + "Answered correctly?(y/n): ");
+                String answer = input.nextLine();
+                if (answer.equals(no)) {
+                    YNList.add(no);
+                }
+                if (answer.equals(yes)) {
+                    YNList.add(yes);
+                }
+            }
+            for (String s : YNList) {
+                if (s == yes) {
+                    for (int i = 0, j = 0; i < contestants.size(); i++, j++)
+                        if (YNList.get(j).equals(no)) {
+                            contestants.remove(i);
+                            i--;
+                        }
+                    break;
+                }
+            }
+            round++;
+        }
+        System.out.println("Winner is " + contestants.get(0));
+        input.close();
+    }
+}
